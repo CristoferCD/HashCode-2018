@@ -73,7 +73,7 @@ public class Main {
       }
     }
       try {
-          PrintWriter writer = new PrintWriter("e_high_bonus.txt", "UTF-8");
+          PrintWriter writer = new PrintWriter("c_no_hurry.txt", "UTF-8");
           for (Car c : cars) {
               writer.println(c.printFormatted());
           }
