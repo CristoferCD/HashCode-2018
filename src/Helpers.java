@@ -7,18 +7,35 @@ public class Helpers {
     // Llega a ride.start
     int cost = distance(carStart, ride.start);
 
-    // T cuando llegas
-    cost += currentT;
+        // T cuando llegas
+        int onArrivalT = currentT + cost;
 
-    // Tiempo de espera8
-    if (ride.earliestStart > cost)
-      cost += ride.earliestStart - cost;
+        // Tiempo de espera
+        if (ride.earliestStart > onArrivalT)
+            cost += ride.earliestStart - onArrivalT;
 
     cost += ride.distance();
 
     if (cost > ride.latestFinish)
       throw new Exception();
 
-    return cost;
-  }
+        return cost;
+    }
+
+    static int idleTime (Point actualP, Ride ride, int currentT){
+        // Llega a ride.start
+        int cost = distance(actualP, ride.start);
+
+        // T cuando llegas
+        int onArrivalT = currentT + cost;
+
+
+        // Tiempo de espera
+        if (ride.earliestStart > onArrivalT)
+            cost += ride.earliestStart - onArrivalT;
+
+        return cost;
+    }
+
+
 }
