@@ -46,20 +46,18 @@ public class Main {
             return Helpers.realCost(car.currentPosition, r1, finalCurrentT) < Helpers.realCost(car.currentPosition, r2,
                 finalCurrentT) ? -1 : 1;
           } catch (Exception e) {
-            return 0;
+              if (Helpers.hasBonus(car.currentPosition, r1, finalCurrentT))
+                  return -1;
+              else if (Helpers.hasBonus(car.currentPosition, r2, finalCurrentT))
+                  return 1;
+              else {
+                  int d1 = Helpers.distance(car.currentPosition, r1.start);
+                  int d2 = Helpers.distance(car.currentPosition, r2.start);
+                  if (d1 < d2) return -1;
+                  else if (d1 > d2) return 1;
+                  else return 0;
+              }
           }
-        }).limit(NumberOfRides/2 < 1 ? 2 : NumberOfRides/2).sorted((r1, r2) -> {
-            if (Helpers.hasBonus(car.currentPosition, r1, finalCurrentT))
-                return -1;
-            else if (Helpers.hasBonus(car.currentPosition, r2, finalCurrentT))
-                return 1;
-            else return 0;
-        }).limit(NumberOfRides/4 < 1 ? 2 : NumberOfRides/4).sorted((r1, r2) -> {
-            int d1 = Helpers.distance(car.currentPosition, r1.start);
-            int d2 = Helpers.distance(car.currentPosition, r2.start);
-            if (d1 < d2) return -1;
-            else if (d1 > d2) return 1;
-            else return 0;
         }).findFirst();
 
         if (currentRoutes.isPresent()) {
@@ -75,7 +73,7 @@ public class Main {
       }
     }
       try {
-          PrintWriter writer = new PrintWriter("c_no_hurry.txt", "UTF-8");
+          PrintWriter writer = new PrintWriter("e_high_bonus.txt", "UTF-8");
           for (Car c : cars) {
               writer.println(c.printFormatted());
           }
