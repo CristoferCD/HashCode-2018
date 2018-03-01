@@ -37,5 +37,14 @@ public class Helpers {
         return cost;
     }
 
+    static boolean hasBonus (Point actualP, Ride ride, int currentT) {
+        int cost = distance(actualP, ride.start);
 
+        // T cuando llegas
+        int onArrivalT = currentT + cost;
+
+
+        // Tiempo de espera
+        return ride.earliestStart >= onArrivalT;
+    }
 }

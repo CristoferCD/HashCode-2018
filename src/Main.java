@@ -34,7 +34,7 @@ public class Main {
 
       for (Car car : availableCars) {
         int finalCurrentT = currentT;
-        Optional<Ride> currentRoutes = routes.parallelStream().filter((route) -> {
+        Optional<Ride> currentRoutes = routes.stream().filter((route) -> {
           try {
             Helpers.realCost(car.currentPosition, route, finalCurrentT);
             return true;
@@ -48,31 +48,42 @@ public class Main {
           } catch (Exception e) {
             return 0;
           }
+        }).limit(NumberOfRides/2 < 1 ? 2 : NumberOfRides/2).sorted((r1, r2) -> {
+            if (Helpers.hasBonus(car.currentPosition, r1, finalCurrentT))
+                return -1;
+            else if (Helpers.hasBonus(car.currentPosition, r2, finalCurrentT))
+                return 1;
+            else return 0;
+        }).limit(NumberOfRides/4 < 1 ? 2 : NumberOfRides/4).sorted((r1, r2) -> {
+            int d1 = Helpers.distance(car.currentPosition, r1.start);
+            int d2 = Helpers.distance(car.currentPosition, r2.start);
+            if (d1 < d2) return -1;
+            else if (d1 > d2) return 1;
+            else return 0;
         }).findFirst();
 
         if (currentRoutes.isPresent()) {
           Ride selectedRoute = currentRoutes.get();
           car.assignedRoutes.add(selectedRoute.id);
           car.currentRoute = selectedRoute;
-          //TODO: igual no borra
           routes.remove(selectedRoute);
         }
-        System.out.println(car);
 
         if (routes.isEmpty()) {
-          try {
-            PrintWriter writer = new PrintWriter("output.txt", "UTF-8");
-            for (Car c : cars) {
-              writer.println(c.printFormatted());
-            }
-            writer.close();
-          } catch (FileNotFoundException | UnsupportedEncodingException e) {
-            e.printStackTrace();
-          }
-          return;
+          break;
         }
       }
     }
+      try {
+          PrintWriter writer = new PrintWriter("c_no_hurry.txt", "UTF-8");
+          for (Car c : cars) {
+              writer.println(c.printFormatted());
+          }
+          writer.close();
+      } catch (FileNotFoundException | UnsupportedEncodingException e) {
+          e.printStackTrace();
+      }
+      return;
   }
 
   private static List<Ride> loadRoutes(String file) {
