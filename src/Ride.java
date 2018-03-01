@@ -11,4 +11,8 @@ public class Ride {
         this.earliestStart = earliestStart;
         this.latestFinish = latestFinish;
     }
+
+    public int distance() {
+        return Helpers.distance(start, end);
+    }
 }
