@@ -1,11 +1,13 @@
 public class Ride {
+    int id;
     Point start;
     Point end;
 
     int earliestStart;
     int latestFinish;
 
-    public Ride(Point start, Point end, int earliestStart, int latestFinish) {
+    public Ride(int id, Point start, Point end, int earliestStart, int latestFinish) {
+        this.id = id;
         this.start = start;
         this.end = end;
         this.earliestStart = earliestStart;
