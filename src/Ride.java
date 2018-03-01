@@ -13,8 +13,11 @@ public class Ride {
         this.earliestStart = earliestStart;
         this.latestFinish = latestFinish;
     }
-    public String toString() {
-        return "inicio: " + start + "; fin: " + end + "; eS: " + earliestStart + "; lF: " + latestFinish;
+    public String toStringLargo() {
+        return "id: " + id + "; inicio: " + start + "; fin: " + end + "; eS: " + earliestStart + "; lF: " + latestFinish;
+    }
+    public String toString(){
+        return Integer.toString(id);
     }
 
     public int distance() {
