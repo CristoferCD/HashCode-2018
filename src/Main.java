@@ -75,7 +75,7 @@ public class Main {
       }
     }
       try {
-          PrintWriter writer = new PrintWriter("a_example.txt", "UTF-8");
+          PrintWriter writer = new PrintWriter("c_no_hurry.txt", "UTF-8");
           for (Car c : cars) {
               writer.println(c.printFormatted());
           }
@@ -103,7 +103,7 @@ public class Main {
         Point fin = new Point(Integer.parseInt(linea[2].trim()), Integer.parseInt(linea[3].trim()));
         int eS = Integer.parseInt(linea[4].trim());
         int lF = Integer.parseInt(linea[5].trim());
-        Ride r = new Ride(i, inicio, fin, eS, lF);
+        Ride r = new Ride(i-1, inicio, fin, eS, lF);
         System.out.println(r);
         listaRides.add(r);
       }
